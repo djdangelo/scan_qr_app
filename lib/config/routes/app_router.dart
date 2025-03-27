@@ -17,5 +17,9 @@ List<GetPage<dynamic>> appRouters = [
   GetPage(
     name: '/login',
     page: () => LoginPage(),
+  ),
+  GetPage(
+    name: '/scan-qr',
+    page: () => ScanQrPage(),
   )
 ];

@@ -67,7 +67,7 @@ class HomePage extends StatelessWidget {
           height: 50,
           elevation: 0,
           shape: const StadiumBorder(),
-          onPressed: () {},
+          onPressed: () => homeController.scanQr(),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

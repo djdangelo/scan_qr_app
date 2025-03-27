@@ -3,3 +3,4 @@ export './init_page.dart';
 export './loading_page.dart';
 export './login_page.dart';
 export './auth_biometric_page.dart';
+export './scan_qr_page.dart';

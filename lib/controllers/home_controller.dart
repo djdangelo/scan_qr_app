@@ -9,6 +9,7 @@ class HomeController extends GetxController {
   PreferencesService preferencesService = PreferencesService();
   StorageSecureHelper storageSecure = StorageSecureHelper();
   QrDataService qrDataService = QrDataService();
+  PermissionCameraHelper permission = PermissionCameraHelper();
 
   var now = DateTime.now();
   var message = ''.obs;
@@ -70,6 +71,13 @@ class HomeController extends GetxController {
           'Ha ocurrido un error al intentar cargar los datos. Intenta de nuevo en un momento.',
           duration: const Duration(milliseconds: 10000));
     }
+  }
+
+  scanQr() async {
+    if (!await permission.isPermissionGranted()) {
+      await permission.requestCameraAccess();
+    }
+    Get.toNamed('/scan-qr');
   }
 
   @override
