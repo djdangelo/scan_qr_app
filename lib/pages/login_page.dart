@@ -5,15 +5,17 @@ import 'package:get/get.dart';
 import 'package:scan_qr_app/constants/constants.dart';
 import 'package:scan_qr_app/controllers/controllers.dart';
 import 'package:scan_qr_app/models/models.dart';
+import 'package:scan_qr_app/pages/pages.dart';
 
 // ignore: must_be_immutable
-class InitPage extends StatelessWidget {
-  InitPage({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
+
   GlobalButtonDecoartion button = GlobalButtonDecoartion();
   TextfieldDecorationConstant textFieldDecoration =
       TextfieldDecorationConstant();
 
-  InitController initController = Get.put(InitController());
+  LoginController loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +32,7 @@ class InitPage extends StatelessWidget {
               duration: const Duration(milliseconds: 600),
               child: Center(
                   child: Text(
-                '''Hola👋, iniciemos a Escanear codigos QR! 😎 
-Dinos 🫡, como quieres que me dirija a ti 👻:''',
+                '''Para poder inciar😎, ingresa una contraseña🫣, (nos servira para jackear la NASA BRO!! 🤫😂):''',
                 style: TextStyle(
                     fontSize: heightApp * 0.025, fontWeight: FontWeight.bold),
               )),
@@ -40,15 +41,14 @@ Dinos 🫡, como quieres que me dirija a ti 👻:''',
               height: heightApp * 0.03,
             ),
             TextField(
-              obscureText: false,
+              obscureText: true,
               keyboardType: TextInputType.text,
-              maxLength: 12,
-              controller: initController.nameUserTextController,
+              controller: loginController.passwordController,
               decoration: textFieldDecoration.globalTextField(
                   data: TextFieldPropertiesModel(
-                      hintText: 'Puedes usar tu nombre, apodo...',
+                      hintText: 'Esfuerzate, creo en ti🫡...',
                       label: 'Imagina... 😁',
-                      icon: FontAwesomeIcons.userAstronaut)),
+                      icon: FontAwesomeIcons.lock)),
             ),
             Divider(height: heightApp * 0.02, color: Colors.black),
             SizedBox(
@@ -56,17 +56,35 @@ Dinos 🫡, como quieres que me dirija a ti 👻:''',
             ),
             FadeInUp(
               duration: const Duration(milliseconds: 600),
-              child: ElevatedButton.icon(
-                style: button.globalButtonDecoration(withApp, heightApp),
-                icon: Icon(
-                  FontAwesomeIcons.arrowRight,
-                  color: Colors.white,
-                  size: heightApp * 0.03,
-                ),
-                onPressed: () => initController.initTrip(),
-                label: const Text('VAMOOOS! 🚀'),
+              child: Column(
+                children: [
+                  ElevatedButton.icon(
+                    style: button.globalButtonDecoration(withApp, heightApp),
+                    icon: Icon(
+                      FontAwesomeIcons.userCheck,
+                      color: Colors.white,
+                      size: heightApp * 0.03,
+                    ),
+                    onPressed: () => loginController.login(),
+                    label: Obx(() => Text(loginController.textButton.value)),
+                  ),
+                  SizedBox(
+                    height: heightApp * 0.01,
+                  ),
+                  ElevatedButton.icon(
+                    style: button.globalButtonDecoration(withApp, heightApp),
+                    icon: Icon(
+                      FontAwesomeIcons.arrowRight,
+                      color: Colors.white,
+                      size: heightApp * 0.03,
+                    ),
+                    onPressed: () => Get.offAll(
+                        () => AuthBiometricPage(optionBiometricData: 'login')),
+                    label: const Text('BIOMETRIA! 😮'),
+                  ),
+                ],
               ),
-            )
+            ),
           ],
         ),
       ),

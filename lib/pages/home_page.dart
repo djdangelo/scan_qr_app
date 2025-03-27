@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:scan_qr_app/controllers/home_controller.dart';
 import 'package:scan_qr_app/widgets/widget.dart';
 
 // ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({super.key});
+
+  HomeController homeController = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -18,26 +22,30 @@ class HomePage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
           PopupMenuButton(onSelected: (value) {
-            if (value == 'Activar lectura biometrica') {
-              //homeController.biometricAction(0);
-            }
-            if (value == 'Desactivar lectura biometrica') {
-              //homeController.biometricAction(1);
+            if (value == 'Salir') {
+              homeController.actions(2);
             }
           }, itemBuilder: (BuildContext context) {
-            /*return homeController.labelAction.map((String choice) {
+            return homeController.labelAction.map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),
               );
-            }).toList();*/
+            }).toList();
           })
         ],
       ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(heightApp * 0.01),
-        child: SafeArea(child: HeaderCardWidget(textShow: 'test')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SafeArea(
+                child:
+                    HeaderCardWidget(textShow: homeController.message.value)),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: MaterialButton(

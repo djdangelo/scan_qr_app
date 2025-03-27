@@ -40,6 +40,10 @@ dependencies:
   animate_do:
   flutter_bloc: ^9.1.0
   bloc: ^9.0.0
+  get:
+  permission_handler: ^11.3.1
+  flutter_secure_storage: ^9.0.0
+  intl: ^0.19.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

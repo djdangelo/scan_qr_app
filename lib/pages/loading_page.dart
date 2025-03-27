@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:scan_qr_app/controllers/controllers.dart';
 
 class LoadingPage extends StatelessWidget {
-  const LoadingPage({Key? key}) : super(key: key);
+  LoadingPage({Key? key}) : super(key: key);
+  LoadingController loadingController = Get.put(LoadingController());
 
   @override
   Widget build(BuildContext context) {
