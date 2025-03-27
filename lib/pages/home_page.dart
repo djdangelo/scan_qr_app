@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:scan_qr_app/controllers/home_controller.dart';
+import 'package:scan_qr_app/controllers/controllers.dart';
 import 'package:scan_qr_app/widgets/widget.dart';
 
 // ignore: must_be_immutable
@@ -42,8 +42,21 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             SafeArea(
-                child:
-                    HeaderCardWidget(textShow: homeController.message.value)),
+              child: HeaderCardWidget(textShow: homeController.message.value),
+            ),
+            Divider(height: heightApp * 0.02, color: Colors.black),
+            Flexible(
+              child: Obx(() => (homeController.listData.isEmpty)
+                  ? Center(
+                      heightFactor: 5.0,
+                      child: homeController.showSpinner.isTrue
+                          ? const CircularProgressIndicator(color: Colors.black)
+                          : const Text('No hay datos que mostrar.'),
+                    )
+                  : CardListDataWidget(
+                      listData: homeController.listData,
+                    )),
+            ),
           ],
         ),
       ),

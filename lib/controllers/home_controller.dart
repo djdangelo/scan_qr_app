@@ -1,17 +1,19 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:scan_qr_app/helpers/helpers.dart';
+import 'package:scan_qr_app/models/models.dart';
 import 'package:scan_qr_app/pages/pages.dart';
 import 'package:scan_qr_app/services/services.dart';
 
 class HomeController extends GetxController {
   PreferencesService preferencesService = PreferencesService();
   StorageSecureHelper storageSecure = StorageSecureHelper();
+  QrDataService qrDataService = QrDataService();
 
   var now = DateTime.now();
   var message = ''.obs;
 
-  var listData = [].obs;
+  var listData = <QrDataModel>[].obs;
   var showSpinner = false.obs;
 
   var selectedPage = 0.obs;
@@ -52,15 +54,28 @@ class HomeController extends GetxController {
       Get.to(() => AuthBiometricPage(optionBiometricData: 'desactive'));
     }
     if (actionValue == 2) {
-      //await storageSecure.deletePassword('password');
       Get.offAndToNamed('/login');
       preferencesService.logOut();
+    }
+  }
+
+  getData() async {
+    showSpinner.value = true;
+    try {
+      listData.value = await qrDataService.getData();
+      showSpinner.value = false;
+    } catch (e) {
+      showSpinner.value = false;
+      Get.snackbar('Error',
+          'Ha ocurrido un error al intentar cargar los datos. Intenta de nuevo en un momento.',
+          duration: const Duration(milliseconds: 10000));
     }
   }
 
   @override
   void onInit() async {
     getMessageWelcome();
+    await getData();
     super.onInit();
   }
 }
