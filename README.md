@@ -1,16 +1,14 @@
-# scan_qr_app
+# App Scan QR
 
-A new Flutter project.
+## Pasos para usarla:
 
-## Getting Started
+1. Instala la APK.
+2. Ingresa un apodo o un nombre en la app.
+3. Ingresa una contraseña.
+4. Puedes autenticarte con datos biométricos si tu celular tiene habilitados los mismos.
+5. La app te da la bienvenida.
+6. Intenta leer un QR y otorga el permiso a la app para poder abrir la cámara.
+7. Guarda el dato escaneado.
+8. En la pantalla principal verás los datos guardados en la base de datos local.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+**Nota:** La app usa SQLite como base de datos local.
