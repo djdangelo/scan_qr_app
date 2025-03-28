@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
                       color: Colors.white,
                       size: heightApp * 0.03,
                     ),
-                    onPressed: () => Get.offAll(
+                    onPressed: () => Get.to(
                         () => AuthBiometricPage(optionBiometricData: 'login')),
                     label: const Text('BIOMETRIA! 😮'),
                   ),

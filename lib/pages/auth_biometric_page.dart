@@ -50,8 +50,12 @@ class AuthBiometricPage extends StatelessWidget {
                   color: Colors.white,
                   size: heightApp * 0.03,
                 ),
-                onPressed: () async =>
-                    await authBiometricController.authUser(optionBiometricData),
+                onPressed: () async => (authBiometricController
+                            .canCheckBiometricInit.isTrue ||
+                        authBiometricController.isAvailableBiometricData.isTrue)
+                    ? await authBiometricController
+                        .authUser(optionBiometricData)
+                    : null,
                 label: const Text(
                   ' AUTENTICAR!',
                   style: TextStyle(color: Colors.white),
@@ -61,7 +65,8 @@ class AuthBiometricPage extends StatelessWidget {
             const SizedBox(
               height: 40,
             ),
-            Obx(() => (authBiometricController.canCheckBiometricInit.isFalse)
+            Obx(() => (authBiometricController.canCheckBiometricInit.isFalse ||
+                    authBiometricController.isAvailableBiometricData.isFalse)
                 ? SizedBox(
                     width: withApp,
                     height: heightApp * 0.1,

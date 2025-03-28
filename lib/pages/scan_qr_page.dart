@@ -63,7 +63,7 @@ class ScanQrPage extends StatelessWidget {
                   color: Colors.white,
                   size: heightApp * 0.03,
                 ),
-                onPressed: () {},
+                onPressed: () => scanController.saveData(),
                 label: const Text(
                   ' GUARDAR! 👻',
                   style: TextStyle(color: Colors.white),

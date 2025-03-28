@@ -18,7 +18,7 @@ class CardListDataWidget extends StatelessWidget {
           expandedHeaderPadding: const EdgeInsets.only(top: 20, bottom: 20),
           elevation: 3,
           expansionCallback: (panelIndex, isExpanded) {
-            listData[panelIndex].isExpanded?.value = !isExpanded;
+            listData[panelIndex].isExpanded!.value = isExpanded;
           },
           children: listData.map<ExpansionPanel>((data) {
             return ExpansionPanel(
@@ -37,7 +37,7 @@ class CardListDataWidget extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         maxRadius: heightApp * 0.03,
                         child: Icon(
-                          FontAwesomeIcons.cashRegister,
+                          FontAwesomeIcons.qrcode,
                           color: Colors.black,
                           size: heightApp * 0.04,
                         )),

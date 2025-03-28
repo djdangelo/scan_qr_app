@@ -4,6 +4,8 @@ import 'package:scan_qr_app/services/services.dart';
 
 class AuthBiometricController extends GetxController {
   var canCheckBiometricInit = false.obs;
+  var isAvailableBiometricData = false.obs;
+
   PreferencesService preferencesService = PreferencesService();
 
   static Future<bool> canCheckBiometric() async {
@@ -31,6 +33,7 @@ class AuthBiometricController extends GetxController {
   @override
   void onInit() async {
     canCheckBiometricInit.value = await canCheckBiometric();
+    isAvailableBiometricData.value = await LocalAuthPlugin.availableBiometric();
     super.onInit();
   }
 }

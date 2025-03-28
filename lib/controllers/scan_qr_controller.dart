@@ -8,7 +8,7 @@ import 'package:scan_qr_app/services/services.dart';
 
 class ScanQrController extends GetxController {
   QrDataService qrDataService = QrDataService();
-  HomeController homeController = HomeController();
+  HomeController homeController = Get.put(HomeController());
 
   var scannedData = ''.obs;
   QRViewController? controller;
@@ -51,6 +51,7 @@ class ScanQrController extends GetxController {
         colorText: Colors.black,
         icon: const Icon(FontAwesomeIcons.info),
       );
+      resumeCamera();
       homeController.getData();
     } catch (e) {
       Get.snackbar(
