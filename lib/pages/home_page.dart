@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
+import 'package:scan_qr_app/bloc/bloc.dart';
 import 'package:scan_qr_app/widgets/widget.dart';
 
 // ignore: must_be_immutable
@@ -18,26 +21,75 @@ class HomePage extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
           PopupMenuButton(onSelected: (value) {
-            if (value == 'Activar lectura biometrica') {
-              //homeController.biometricAction(0);
-            }
-            if (value == 'Desactivar lectura biometrica') {
-              //homeController.biometricAction(1);
+            if (value == 'Salir') {
+              context.read<HomeBloc>().add(ActionEvent(2));
             }
           }, itemBuilder: (BuildContext context) {
-            /*return homeController.labelAction.map((String choice) {
+            return ['Salir'].map((String choice) {
               return PopupMenuItem<String>(
                 value: choice,
                 child: Text(choice),
               );
-            }).toList();*/
+            }).toList();
           })
         ],
       ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(heightApp * 0.01),
-        child: SafeArea(child: HeaderCardWidget(textShow: 'test')),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SafeArea(
+              child: BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state is MessageWelcomeState) {
+                    return HeaderCardWidget(textShow: state.message);
+                  }
+                  return HeaderCardWidget(textShow: 'Cargando...');
+                },
+              ),
+            ),
+            Divider(height: heightApp * 0.02, color: Colors.black),
+            Expanded(
+              child: BlocListener<HomeBloc, HomeState>(
+                listener: (context, state) {
+                  if (state is ErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(state.message),
+                        duration: const Duration(seconds: 5),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
+
+                  if (state is NavigateToState) {
+                    context.goNamed(state.route);
+                  }
+                },
+                child: BlocBuilder<HomeBloc, HomeState>(
+                  builder: (context, state) {
+                    if (state is LoadingProgressState) {
+                      return const Center(
+                        child: CircularProgressIndicator(color: Colors.black),
+                      );
+                    }
+                    if (state is DataLoadedState) {
+                      if (state.listData.isEmpty) {
+                        return const Center(
+                          child: Text('No hay datos que mostrar.'),
+                        );
+                      }
+                      return CardListDataWidget(listData: state.listData);
+                    }
+                    return const Center(child: Text("Cargando datos..."));
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: MaterialButton(
@@ -46,7 +98,7 @@ class HomePage extends StatelessWidget {
           height: 50,
           elevation: 0,
           shape: const StadiumBorder(),
-          onPressed: () {},
+          onPressed: () => context.read<HomeBloc>().add(OpenScanQrEvent()),
           child: const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.min,

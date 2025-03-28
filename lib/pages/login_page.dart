@@ -4,27 +4,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:scan_qr_app/bloc/bloc.dart';
-import 'package:scan_qr_app/bloc/init/bloc/init_bloc.dart';
 import 'package:scan_qr_app/constants/constants.dart';
 import 'package:scan_qr_app/models/models.dart';
 
 // ignore: must_be_immutable
-class InitPage extends StatelessWidget {
-  InitPage({super.key});
+class LoginPage extends StatelessWidget {
+  LoginPage({super.key});
+
   GlobalButtonDecoartion button = GlobalButtonDecoartion();
   TextfieldDecorationConstant textFieldDecoration =
       TextfieldDecorationConstant();
 
-  final TextEditingController nameUserController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final initBloc = BlocProvider.of<InitBloc>(context, listen: false);
     double withApp = MediaQuery.of(context).size.width;
     double heightApp = MediaQuery.of(context).size.height;
-    return BlocListener<InitBloc, InitState>(
+    var loginBloc = BlocProvider.of<LoginBloc>(context, listen: false);
+    return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
-        if (state is InitErrorState) {
+        if (state is LoginErrorState) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
@@ -33,7 +33,7 @@ class InitPage extends StatelessWidget {
             ),
           );
         }
-        if (state is InitNavigateToState) {
+        if (state is LoginNavigateToState) {
           context.goNamed(state.route);
         }
       },
@@ -48,8 +48,7 @@ class InitPage extends StatelessWidget {
                 duration: const Duration(milliseconds: 600),
                 child: Center(
                     child: Text(
-                  '''Hola👋, iniciemos a Escanear codigos QR! 😎 
-    Dinos 🫡, como quieres que me dirija a ti 👻:''',
+                  '''Para poder inciar😎, ingresa una contraseña🫣, (nos servira para jackear la NASA BRO!! 🤫😂):''',
                   style: TextStyle(
                       fontSize: heightApp * 0.025, fontWeight: FontWeight.bold),
                 )),
@@ -58,15 +57,14 @@ class InitPage extends StatelessWidget {
                 height: heightApp * 0.03,
               ),
               TextField(
-                obscureText: false,
+                obscureText: true,
                 keyboardType: TextInputType.text,
-                maxLength: 12,
-                controller: nameUserController,
+                controller: passwordController,
                 decoration: textFieldDecoration.globalTextField(
                     data: TextFieldPropertiesModel(
-                        hintText: 'Puedes usar tu nombre, apodo...',
+                        hintText: 'Esfuerzate, creo en ti🫡...',
                         label: 'Imagina... 😁',
-                        icon: FontAwesomeIcons.userAstronaut)),
+                        icon: FontAwesomeIcons.lock)),
               ),
               Divider(height: heightApp * 0.02, color: Colors.black),
               SizedBox(
@@ -74,18 +72,43 @@ class InitPage extends StatelessWidget {
               ),
               FadeInUp(
                 duration: const Duration(milliseconds: 600),
-                child: ElevatedButton.icon(
-                  style: button.globalButtonDecoration(withApp, heightApp),
-                  icon: Icon(
-                    FontAwesomeIcons.arrowRight,
-                    color: Colors.white,
-                    size: heightApp * 0.03,
-                  ),
-                  onPressed: () =>
-                      initBloc.add(StartTripEvent(nameUserController.text)),
-                  label: const Text('VAMOOOS! 🚀'),
+                child: Column(
+                  children: [
+                    ElevatedButton.icon(
+                      style: button.globalButtonDecoration(withApp, heightApp),
+                      icon: Icon(
+                        FontAwesomeIcons.userCheck,
+                        color: Colors.white,
+                        size: heightApp * 0.03,
+                      ),
+                      onPressed: () => loginBloc
+                          .add(LoginSubmitEvent(passwordController.text)),
+                      label: BlocBuilder<LoginBloc, LoginState>(
+                        builder: (context, state) {
+                          if (state is LoginInitial) {
+                            return Text(state.buttonText);
+                          }
+                          return SizedBox();
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: heightApp * 0.01,
+                    ),
+                    ElevatedButton.icon(
+                      style: button.globalButtonDecoration(withApp, heightApp),
+                      icon: Icon(
+                        FontAwesomeIcons.arrowRight,
+                        color: Colors.white,
+                        size: heightApp * 0.03,
+                      ),
+                      onPressed: () => context.goNamed('/biometric',
+                          pathParameters: {'data': 'login'}),
+                      label: const Text('BIOMETRIA! 😮'),
+                    ),
+                  ],
                 ),
-              )
+              ),
             ],
           ),
         ),
