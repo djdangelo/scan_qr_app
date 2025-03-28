@@ -29,12 +29,12 @@ class InitPage extends StatelessWidget {
             SnackBar(
               content: Text(state.message),
               duration: const Duration(seconds: 5),
-              backgroundColor: Colors.redAccent,
+              backgroundColor: Colors.black87,
             ),
           );
         }
         if (state is InitNavigateToState) {
-          context.goNamed(state.route);
+          context.go(state.route);
         }
       },
       child: Scaffold(

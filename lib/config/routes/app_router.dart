@@ -23,6 +23,7 @@ final appRouter = GoRouter(initialLocation: '/loading', routes: [
     builder: (context, state) => ScanQrPage(),
   ),
   GoRoute(
+    name: 'biometric',
     path: '/biometric/:data',
     builder: (context, state) => AuthBiometricPage(
         optionBiometricData: state.pathParameters['data'] ?? ''),

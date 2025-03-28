@@ -15,6 +15,7 @@ class ScanQrBloc extends Bloc<ScanQrEvent, ScanQrState> {
     on<QRScanned>(_onQRScanned);
     on<SaveScannedData>(_onSaveScannedData);
     on<ResumeCamera>(_onResumeCamera);
+    on<StartScanning>(_onStartScanning);
   }
 
   void _onQRScanned(QRScanned event, Emitter<ScanQrState> emit) {

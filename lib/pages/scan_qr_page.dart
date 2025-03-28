@@ -40,7 +40,7 @@ class ScanQrPage extends StatelessWidget {
               SnackBar(
                 content: Text(state.message),
                 duration: const Duration(seconds: 5),
-                backgroundColor: Colors.redAccent,
+                backgroundColor: Colors.black87,
               ),
             );
           }
@@ -48,6 +48,7 @@ class ScanQrPage extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('QR guardado exitosamente 🎉')),
             );
+            context.replace('/home');
           }
         },
         builder: (context, state) {

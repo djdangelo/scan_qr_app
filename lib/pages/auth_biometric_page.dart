@@ -45,7 +45,7 @@ class AuthBiometricPage extends StatelessWidget {
           listener: (context, state) {
             if (state is AuthenticationSuccess) {
               if (optionBiometricData == 'login') {
-                context.replaceNamed('/home');
+                context.replace('/home');
               }
             }
             if (state is AuthenticationFailed) {

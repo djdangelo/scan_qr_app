@@ -16,11 +16,11 @@ class CardListDataWidget extends StatelessWidget {
         expandedHeaderPadding: const EdgeInsets.only(top: 20, bottom: 20),
         elevation: 3,
         expansionCallback: (panelIndex, isExpanded) {
-          listData[panelIndex].isExpanded = !isExpanded;
+          listData[panelIndex].isExpanded = isExpanded;
         },
         children: listData.map<ExpansionPanel>((data) {
           return ExpansionPanel(
-              isExpanded: data.isExpanded!,
+              isExpanded: true,
               headerBuilder: (context, isExpanded) {
                 return ListTile(
                   title: Text(

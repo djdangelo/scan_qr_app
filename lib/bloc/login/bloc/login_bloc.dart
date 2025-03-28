@@ -22,11 +22,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           'Oye!😓 No haz ingresado una contraseña valida ✍️, es importante para nuestro sistema🤩'));
       return;
     }
-    if (state is LoginInitial && (state as LoginInitial).existPass) {
+    if (await storageSecure.existPassword()) {
       final isValid =
           await storageSecure.validatePassword('password', event.password);
       if (!isValid) {
-        emit(LoginErrorState('La contraseña que ingresaste no es válida.😫'));
+        emit(LoginErrorState('La contraseña que ingresaste no es correcta.😫'));
         return;
       } else {
         emit(LoginNavigateToState('/home'));

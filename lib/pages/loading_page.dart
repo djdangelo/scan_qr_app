@@ -17,7 +17,7 @@ class LoadingPage extends StatelessWidget {
         body: BlocListener<LoadingBloc, LoadingState>(
           listener: (context, state) {
             if (state is LoadingNavigateToState) {
-              context.goNamed(state.route);
+              context.go(state.route);
             }
           },
           child: const Center(

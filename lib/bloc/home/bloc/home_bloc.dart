@@ -24,9 +24,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<GetDataEvent>(_getData);
     on<ActionEvent>(_handleAction);
     on<OpenScanQrEvent>(_scanQr);
-
-    add(GetMessageWelcomeEvent());
-    add(GetDataEvent());
   }
 
   void _getMessageWelcome(
@@ -42,7 +39,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else {
       message = 'Buenas noches 😴 ${preferencesService.getNameUser}!';
     }
-
     emit(MessageWelcomeState(message));
   }
 
